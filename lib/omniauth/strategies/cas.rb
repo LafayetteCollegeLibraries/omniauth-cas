@@ -23,6 +23,10 @@ module OmniAuth
       option :path, nil
       option :ssl,  true
       option :service_validate_url, '/serviceValidate'
+
+      # @author griffinj@lafayette.edu
+      option :callback_url, '/users/auth/cas/callback'
+
       option :login_url,            '/login'
       option :logout_url,           '/logout'
       option :on_single_sign_out,   Proc.new {}
@@ -88,6 +92,10 @@ module OmniAuth
       end
 
       def request_phase
+
+        # @author griffinj@lafayette.edu
+        callback_url = options.callback_url || callback_url
+
         service_url = append_params(callback_url, return_url)
 
         [
