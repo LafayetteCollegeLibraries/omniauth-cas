@@ -158,6 +158,10 @@ module OmniAuth
       #
       # @return [String] a URL like `http://cas.mycompany.com/serviceValidate?service=...&ticket=...`
       def service_validate_url(service_url, ticket)
+
+        # @author griffinj                                                                                                                                                                                 
+        service_url = service_url.gsub /http\:/, 'https:' if options.ssl
+        
         service_url = Addressable::URI.parse(service_url)
         service_url.query_values = service_url.query_values.tap { |qs| qs.delete('ticket') }
         cas_url + append_params(options.service_validate_url, {
